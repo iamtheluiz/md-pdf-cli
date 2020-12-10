@@ -28,38 +28,41 @@ const sanitizedFiles = files.filter(file => {
 
 console.log(`Processing...`);
 
-sanitizedFiles.forEach(async file => {
-  const filePath = path.join(process.env.INPUT_DIR, file);
-  const fileOutputPath = path.join(process.env.OUTPUT_DIR, `${path.basename(file).split('.')[0]}.pdf`);
+async function convertFiles() {
+  for (const file of sanitizedFiles) {
+    const filePath = path.join(process.env.INPUT_DIR, file);
+    const fileOutputPath = path.join(process.env.OUTPUT_DIR, `${path.basename(file, path.extname(file))}.pdf`);
 
-  // Get file content
-  const content = fs.readFileSync(filePath);
+    // Get file content
+    const content = fs.readFileSync(filePath);
 
-  // Convert md to HTML
-  let html = md.render(content.toString());
-  html = convertImagePathsToBase64(html);
+    // Convert md to HTML
+    let html = md.render(content.toString());
+    html = convertImagePathsToBase64(html);
 
-  // Get style content
-  const style = fs.readFileSync(path.join(__dirname, 'styles', 'pixyll.css'));
+    // Get style content
+    const style = fs.readFileSync(path.join(__dirname, 'styles', 'pixyll.css'));
 
-  // Add styles
-  const styledHtml = `<style>${style}</style>${html}`;
+    // Add styles
+    const styledHtml = `<style>${style}</style>${html}`;
 
-  const template = hb.compile(styledHtml, { strict: true });
-  const result = template();
+    const template = hb.compile(styledHtml, { strict: true });
+    const result = template();
 
-  // Store html files
-  // fs.writeFileSync(path.join(process.env.HTML_DIR, `${path.basename(file).split('.')[0]}.html`), result);
+    // Store html files
+    // fs.writeFileSync(path.join(process.env.HTML_DIR, `${path.basename(file).split('.')[0]}.html`), result);
 
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.emulateMediaType('screen');
-  await page.setContent(result);
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.emulateMediaType('screen');
+    await page.setContent(result);
 
-  await page.pdf({ path: fileOutputPath, format: 'A4' });
-  await browser.close();
+    await page.pdf({ path: fileOutputPath, format: 'A4' });
+    await browser.close();
 
-  console.log(` - Complete => File: ${file}`);
-});
+    console.log(` - Complete => File: ${file}`);
+  }
 
-console.log('Complete!');
+  console.log('Complete!');
+}
+convertFiles();
