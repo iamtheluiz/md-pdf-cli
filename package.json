@@ -6,6 +6,9 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "remarkable": "^2.0.1"
+    "handlebars": "^4.7.6",
+    "puppeteer": "^5.5.0",
+    "remarkable": "^2.0.1",
+    "remarkable-figure-plugin": "^0.1.0"
   }
 }
