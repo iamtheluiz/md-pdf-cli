@@ -6,6 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "mdpdf": "^2.1.2"
+    "remarkable": "^2.0.1"
   }
 }
