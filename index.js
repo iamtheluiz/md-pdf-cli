@@ -33,6 +33,8 @@ async function convertFiles() {
     const filePath = path.join(process.env.INPUT_DIR, file);
     const fileOutputPath = path.join(process.env.OUTPUT_DIR, `${path.basename(file, path.extname(file))}.pdf`);
 
+    let timeStart = Date.now();
+
     // Get file content
     const content = fs.readFileSync(filePath);
 
@@ -59,8 +61,11 @@ async function convertFiles() {
 
     await page.pdf({ path: fileOutputPath, format: 'A4' });
     await browser.close();
+    
+    let timeEnd = Date.now();
+    const elapsed = (timeEnd - timeStart) / 1000;
 
-    console.log(` - Complete => File: ${file}`);
+    console.log(` - Complete in ${elapsed} seconds => File: ${file}`);
   }
 
   console.log('Complete!');
