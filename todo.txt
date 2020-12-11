@@ -1,0 +1,20 @@
+# Tarefas Essenciais
+
+[X] Adicionar CLI globalmente
+[ ] Adicionar banner
+[ ] Logs com cores
+[ ] Converter apenas 1 arquivo
+[ ] Deixar o usuário passar as pastas pela CLI
+[ ] Oferecer a aplicação como um pacote
+[ ] Documentar
+  - O que é o projeto
+  - Como instalar (via NPM e GIT CLONE)
+  - Dependências
+  - Autores
+[ ] Revisar código
+
+# Tarefas Não Essenciais
+
+[ ] Adicionar testes unitários
+[ ] Transformar a CLI em um módulo
+[ ] Fazer uma versão com Electron

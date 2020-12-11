@@ -1,7 +1,11 @@
 {
-  "name": "mdPdf",
+  "name": "md-pdf-cli",
   "version": "1.0.0",
+  "description": "Convert MD files to PDF",
   "main": "index.js",
+  "bin": {
+    "md-pdf-cli": "index.js"
+  },
   "author": "iamtheluiz <iamtheluiz.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
