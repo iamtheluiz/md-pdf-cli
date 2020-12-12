@@ -2,6 +2,10 @@
 
 Convert MD files to PDF
 
+<center>
+  <img src="./docs/cli.png" width="auto" height="auto" />
+</center>
+
 ### Global CLI
 
 Use in the project root folder:
