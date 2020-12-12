@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const { Remarkable } = require('remarkable');
+import fs from 'fs';
+import path from 'path';
+import { Remarkable } from 'remarkable';
 const figure = require('remarkable-figure-plugin');
 
-const convertImagePathsToBase64 = require('./convertImagePathsToBase64');
+import convertImagePathsToBase64 from './convertImagePathsToBase64';
 
 const md = new Remarkable('full', {
   html: true,
@@ -11,7 +11,7 @@ const md = new Remarkable('full', {
 });
 md.use(figure);
 
-module.exports = function convertContentToHtml(content) {
+export default function convertContentToHtml(content: string): string {
   // Convert md to HTML
   let html = md.render(content.toString());
 

@@ -1,8 +1,8 @@
 # Tarefas Essenciais
 
 [X] Adicionar CLI globalmente
-[ ] Revisar código <-
-[ ] Converter para Typescript
+[X] Revisar código
+[ ] Converter para Typescript <-
 [ ] Adicionar banner
 [ ] Logs com cores
 [ ] Converter apenas 1 arquivo

@@ -1,9 +1,9 @@
-const hb = require('handlebars');
-const puppeteer = require('puppeteer');
+import hb from 'handlebars';
+import puppeteer from 'puppeteer';
 
-module.exports = async function createPdfFromHtml(html) {
+export default async function createPdfFromHtml(html: string): Promise<ArrayBuffer> {
   const template = hb.compile(html, { strict: true });
-  const result = template();
+  const result = template({});
 
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();

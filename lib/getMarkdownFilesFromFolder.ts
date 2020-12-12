@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-module.exports = function getMarkdownFilesFromFolder(folder) {
+export default function getMarkdownFilesFromFolder(folder: string): string[] {
   // Get all files from folder
   const files = fs.readdirSync(folder);
 

@@ -1,11 +1,12 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function base64_encode(file) {
+function base64_encode(file: string): string {
   var bitmap = fs.readFileSync(file);
-  return new Buffer.from(bitmap).toString('base64');
+
+  return Buffer.from(bitmap).toString('base64');
 }
 
-module.exports = function convertImagePathsToBase64(html) {
+export default function convertImagePathsToBase64(html: string): string {
   let imageSplits = html.split('<figure>');
 
   let htmlSanitized = imageSplits.map(image => {
@@ -22,7 +23,7 @@ module.exports = function convertImagePathsToBase64(html) {
     return image;
   });
 
-  htmlSanitized = htmlSanitized.join();
+  html = htmlSanitized.join();
 
-  return htmlSanitized;
+  return html;
 }
