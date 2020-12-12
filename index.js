@@ -1,73 +1,34 @@
+#! /usr/bin/env node
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const hb = require('handlebars');
-const puppeteer = require('puppeteer');
-const { Remarkable } = require('remarkable');
-const figure = require('remarkable-figure-plugin')
 
-const convertImagePathsToBase64 = require('./utils/convertImagePathsToBase64');
+const getMarkdownFilesFromFolder = require('./lib/getMarkdownFilesFromFolder');
+const convertContentToHtml = require('./lib/convertContentToHtml');
+const createPdfFromHtml = require('./lib/createPdfFromHtml');
 
-const md = new Remarkable('full', {
-  html: true,
-  typographer: true
-});
-md.use(figure);
+async function run() {
+  const files = getMarkdownFilesFromFolder(process.env.INPUT_DIR);
 
-// Get all files from folder
-const files = fs.readdirSync(process.env.INPUT_DIR);
-
-// Filter MD files
-const sanitizedFiles = files.filter(file => {
-  const ext = path.extname(file);
-
-  if (ext === '.md') {
-    return file;
-  }
-});
-
-console.log(`Processing...`);
-
-async function convertFiles() {
-  for (const file of sanitizedFiles) {
+  console.log(`Processing...`);
+  for (const file of files) {
     const filePath = path.join(process.env.INPUT_DIR, file);
-    const fileOutputPath = path.join(process.env.OUTPUT_DIR, `${path.basename(file, path.extname(file))}.pdf`);
+    const fileOutputPath = path.join(process.env.OUTPUT_DIR, `${path.basename(file, '.md')}.pdf`);
 
     let timeStart = Date.now();
 
-    // Get file content
     const content = fs.readFileSync(filePath);
+    const html = convertContentToHtml(content);
+    const pdfBuffer = await createPdfFromHtml(html);
 
-    // Convert md to HTML
-    let html = md.render(content.toString());
-    html = convertImagePathsToBase64(html);
+    fs.writeFileSync(fileOutputPath, pdfBuffer);
 
-    // Get style content
-    const style = fs.readFileSync(path.join(__dirname, 'styles', 'pixyll.css'));
-
-    // Add styles
-    const styledHtml = `<style>${style}</style>${html}`;
-
-    const template = hb.compile(styledHtml, { strict: true });
-    const result = template();
-
-    // Store html files
-    // fs.writeFileSync(path.join(process.env.HTML_DIR, `${path.basename(file).split('.')[0]}.html`), result);
-
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.emulateMediaType('screen');
-    await page.setContent(result);
-
-    await page.pdf({ path: fileOutputPath, format: 'A4' });
-    await browser.close();
-    
     let timeEnd = Date.now();
     const elapsed = (timeEnd - timeStart) / 1000;
-
     console.log(` - Complete in ${elapsed} seconds => File: ${file}`);
   }
 
   console.log('Complete!');
 }
-convertFiles();
+run();
+
