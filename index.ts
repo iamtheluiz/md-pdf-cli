@@ -9,6 +9,7 @@ import program from 'commander';
 import getMarkdownFilesFromFolder from './lib/getMarkdownFilesFromFolder';
 import convertContentToHtml from './lib/convertContentToHtml';
 import createPdfFromHtml from './lib/createPdfFromHtml';
+import addStylesToHtmlString from './lib/addStylesToHtmlString';
 
 clear();
 console.log(chalk.magenta(
@@ -44,7 +45,8 @@ async function run() {
       let timeStart = Date.now();
 
       const content = fs.readFileSync(filePath);
-      const html = convertContentToHtml(content.toString());
+      let html = convertContentToHtml(content.toString());
+      html = addStylesToHtmlString(content.toString());
       const pdfBuffer = await createPdfFromHtml(html);
 
       fs.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));

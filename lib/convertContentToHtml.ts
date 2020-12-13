@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { Remarkable } from 'remarkable';
 const figure = require('remarkable-figure-plugin');
 
@@ -18,11 +16,5 @@ export default function convertContentToHtml(content: string): string {
   // Transform images to base64 data
   html = convertImagePathsToBase64(html);
 
-  // Get style content
-  const style = fs.readFileSync(path.join(__dirname, '..', 'styles', 'pixyll.css'));
-
-  // Add styles
-  const styledHtml = `<style>${style}</style>${html}`;
-
-  return styledHtml;
+  return html;
 }
