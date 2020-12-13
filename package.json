@@ -11,7 +11,8 @@
     "start-dist": "node ./dist/index.js",
     "dist": "yarn clean && tsc && yarn copy:styles",
     "clean": "rimraf dist/",
-    "copy:styles": "copyfiles -u 1 styles/**/*.css dist/styles/"
+    "copy:styles": "copyfiles -u 1 styles/**/*.css dist/styles/",
+    "test": "jest"
   },
   "author": "iamtheluiz <iamtheluiz.dev@gmail.com>",
   "license": "MIT",
@@ -26,12 +27,19 @@
     "remarkable-figure-plugin": "^0.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
     "@types/clear": "^0.1.1",
     "@types/figlet": "^1.2.1",
+    "@types/jest": "^26.0.19",
     "@types/puppeteer": "^5.4.2",
     "@types/remarkable": "^2.0.0",
+    "babel-jest": "^26.6.3",
     "copyfiles": "^2.4.1",
+    "jest": "^26.6.3",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }

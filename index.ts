@@ -6,9 +6,11 @@ import chalk from 'chalk';
 import figlet from 'figlet';
 import program from 'commander';
 
+import Timer from './lib/Timer';
 import getMarkdownFilesFromFolder from './lib/getMarkdownFilesFromFolder';
 import convertContentToHtml from './lib/convertContentToHtml';
 import createPdfFromHtml from './lib/createPdfFromHtml';
+import addStylesToHtmlString from './lib/addStylesToHtmlString';
 
 clear();
 console.log(chalk.magenta(
@@ -38,22 +40,22 @@ async function run() {
 
     console.log(chalk.green('Processing...'));
     for (const file of files) {
+      const timer = new Timer();
       const filePath = path.join(INPUT_DIR, file);
       const fileOutputPath = path.join(OUTPUT_DIR, `${path.basename(file, '.md')}.pdf`);
 
-      let timeStart = Date.now();
-
+      timer.start();
       const content = fs.readFileSync(filePath);
-      const html = convertContentToHtml(content.toString());
+      let html = convertContentToHtml(content.toString());
+      html = addStylesToHtmlString(content.toString());
       const pdfBuffer = await createPdfFromHtml(html);
 
       fs.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));
 
-      let timeEnd = Date.now();
-      const elapsed = (timeEnd - timeStart) / 1000;
+      timer.stop();
       console.log(
         ' - Complete in',
-        chalk.yellow(`${elapsed} seconds`),
+        chalk.yellow(`${timer.elapsedTime} seconds`),
         '=> File:',
         chalk.blue(file)
       );
@@ -61,7 +63,7 @@ async function run() {
 
     console.log(chalk.green('Complete!'));
   } catch (error) {
-    console.log(chalk.red('Process failed!')); 
+    console.log(chalk.red('Process failed!'));
   }
 }
 run();
