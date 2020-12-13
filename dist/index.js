@@ -42,7 +42,7 @@ async function run() {
             timer.start();
             const content = fs_1.default.readFileSync(filePath);
             let html = convertContentToHtml_1.default(content.toString());
-            html = addStylesToHtmlString_1.default(content.toString());
+            html = addStylesToHtmlString_1.default(html);
             const pdfBuffer = await createPdfFromHtml_1.default(html);
             fs_1.default.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));
             timer.stop();
@@ -52,7 +52,6 @@ async function run() {
     }
     catch (error) {
         console.log(chalk_1.default.red('Process failed!'));
-        console.log(error);
     }
 }
 run();

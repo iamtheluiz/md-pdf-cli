@@ -47,7 +47,7 @@ async function run() {
       timer.start();
       const content = fs.readFileSync(filePath);
       let html = convertContentToHtml(content.toString());
-      html = addStylesToHtmlString(content.toString());
+      html = addStylesToHtmlString(html);
       const pdfBuffer = await createPdfFromHtml(html);
 
       fs.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));

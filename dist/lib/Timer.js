@@ -12,7 +12,7 @@ class Timer {
     stop() {
         this.endTime = Date.now();
         // Calc elapsed time
-        this.elapsedTime = this.endTime - this.startTime;
+        this.elapsedTime = Number(((this.endTime - this.startTime) / 1000).toFixed(1));
     }
 }
 exports.default = Timer;

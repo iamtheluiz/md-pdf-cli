@@ -3,10 +3,10 @@
 [X] Adicionar CLI globalmente
 [X] Revisar código
 [X] Converter para Typescript
-[X] Adicionar banner <-
-[X] Logs com cores <-
-[ ] Converter apenas 1 arquivo
-[X] Deixar o usuário passar as pastas pela CLI <-
+[X] Adicionar banner
+[X] Logs com cores
+[ ] Converter apenas 1 arquivo <-
+[X] Deixar o usuário passar as pastas pela CLI
 [ ] Oferecer a aplicação como um pacote
 [ ] Documentar
   - O que é o projeto
@@ -16,6 +16,5 @@
 
 # Tarefas Não Essenciais
 
-[ ] Adicionar testes unitários
-[ ] Transformar a CLI em um módulo
+[X] Adicionar testes unitários
 [ ] Fazer uma versão com Electron
