@@ -5,7 +5,7 @@
 [X] Converter para Typescript
 [X] Adicionar banner
 [X] Logs com cores
-[ ] Converter apenas 1 arquivo <-
+[X] Converter apenas 1 arquivo <-
 [X] Deixar o usuário passar as pastas pela CLI
 [ ] Oferecer a aplicação como um pacote
 [ ] Documentar

@@ -24,16 +24,32 @@ commander_1.default
     .option('-i, --input <relative path>', 'Folder with .md files')
     .option('-o, --output <relative path>', 'Folder to store .pdf files')
     .option('-f, --file <relative path>', 'Markdown file to convert')
+    .option('-w, --web', 'Store HTML files')
     .parse(process.argv);
-const INPUT_DIR = path_1.default.join(process.cwd(), commander_1.default.input);
-const OUTPUT_DIR = path_1.default.join(process.cwd(), commander_1.default.output);
+let INPUT_DIR = '';
+let OUTPUT_DIR = '';
+// Set input and output
+if (commander_1.default.input && commander_1.default.output) { // All md files from folder
+    INPUT_DIR = path_1.default.join(process.cwd(), commander_1.default.input);
+    OUTPUT_DIR = path_1.default.join(process.cwd(), commander_1.default.output);
+}
+else if (commander_1.default.file) { // Single file
+    OUTPUT_DIR = path_1.default.join(process.cwd(), commander_1.default.output ? commander_1.default.output : '.');
+}
 console.log(chalk_1.default.green('Received:'));
 console.log(' - Input:', chalk_1.default.yellow(INPUT_DIR));
 console.log(' - Output:', chalk_1.default.yellow(OUTPUT_DIR));
 console.log('');
 async function run() {
     try {
-        const files = getMarkdownFilesFromFolder_1.default(INPUT_DIR);
+        // Store files to convert
+        let files = [];
+        if (INPUT_DIR !== '') { // All md files from folder
+            files = getMarkdownFilesFromFolder_1.default(INPUT_DIR);
+        }
+        else { // Single file
+            files = [commander_1.default.file];
+        }
         console.log(chalk_1.default.green('Processing...'));
         for (const file of files) {
             const timer = new Timer_1.default();
@@ -43,6 +59,9 @@ async function run() {
             const content = fs_1.default.readFileSync(filePath);
             let html = convertContentToHtml_1.default(content.toString());
             html = addStylesToHtmlString_1.default(html);
+            if (commander_1.default.web) {
+                fs_1.default.writeFileSync(path_1.default.join(OUTPUT_DIR, `${path_1.default.basename(file, '.md')}.html`), html);
+            }
             const pdfBuffer = await createPdfFromHtml_1.default(html);
             fs_1.default.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));
             timer.stop();

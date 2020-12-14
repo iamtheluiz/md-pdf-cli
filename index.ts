@@ -24,10 +24,19 @@ program
   .option('-i, --input <relative path>', 'Folder with .md files')
   .option('-o, --output <relative path>', 'Folder to store .pdf files')
   .option('-f, --file <relative path>', 'Markdown file to convert')
+  .option('-w, --web', 'Store HTML files')
   .parse(process.argv);
 
-const INPUT_DIR = path.join(process.cwd(), program.input);
-const OUTPUT_DIR = path.join(process.cwd(), program.output);
+let INPUT_DIR = '';
+let OUTPUT_DIR = '';
+
+// Set input and output
+if (program.input && program.output) {  // All md files from folder
+  INPUT_DIR = path.join(process.cwd(), program.input);
+  OUTPUT_DIR = path.join(process.cwd(), program.output);
+} else if (program.file) {  // Single file
+  OUTPUT_DIR = path.join(process.cwd(), program.output ? program.output : '.');
+}
 
 console.log(chalk.green('Received:'));
 console.log(' - Input:', chalk.yellow(INPUT_DIR));
@@ -36,7 +45,14 @@ console.log('');
 
 async function run() {
   try {
-    const files = getMarkdownFilesFromFolder(INPUT_DIR);
+    // Store files to convert
+    let files: string[] = [];
+
+    if (INPUT_DIR !== '') { // All md files from folder
+      files = getMarkdownFilesFromFolder(INPUT_DIR);
+    } else {  // Single file
+      files = [program.file];
+    }
 
     console.log(chalk.green('Processing...'));
     for (const file of files) {
@@ -48,6 +64,11 @@ async function run() {
       const content = fs.readFileSync(filePath);
       let html = convertContentToHtml(content.toString());
       html = addStylesToHtmlString(html);
+
+      if (program.web) {
+        fs.writeFileSync(path.join(OUTPUT_DIR, `${path.basename(file, '.md')}.html`), html);
+      }
+
       const pdfBuffer = await createPdfFromHtml(html);
 
       fs.writeFileSync(fileOutputPath, new Uint8Array(pdfBuffer));
