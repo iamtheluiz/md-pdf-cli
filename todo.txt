@@ -5,9 +5,9 @@
 [X] Converter para Typescript
 [X] Adicionar banner
 [X] Logs com cores
-[X] Converter apenas 1 arquivo <-
+[X] Converter apenas 1 arquivo
 [X] Deixar o usuário passar as pastas pela CLI
-[ ] Oferecer a aplicação como um pacote
+[ ] Oferecer a aplicação como um pacote <-
 [ ] Documentar
   - O que é o projeto
   - Como instalar (via NPM e GIT CLONE)

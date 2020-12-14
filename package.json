@@ -1,6 +1,7 @@
 {
   "name": "md-pdf-cli",
   "version": "0.1.0",
+  "keywords": ["pdf", "md", "convert"],
   "description": "Convert MD files to PDF",
   "main": "./dist/index.js",
   "bin": {
@@ -16,6 +17,11 @@
   },
   "author": "iamtheluiz <iamtheluiz.dev@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamtheluiz/md-pdf-cli.git"
+  },
+  "homepage": "https://github.com/iamtheluiz/md-pdf-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
