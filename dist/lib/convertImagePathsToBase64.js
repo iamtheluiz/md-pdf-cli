@@ -9,19 +9,21 @@ function base64_encode(file) {
     return Buffer.from(bitmap).toString('base64');
 }
 function convertImagePathsToBase64(html) {
-    let imageSplits = html.split('<figure>');
-    let htmlSanitized = imageSplits.map(image => {
-        if (image.match(/<img src="http/)) {
-            return image;
-        }
-        else if (image.match(/<img src=/)) {
-            const imagePath = image.split(`src="`)[1].split(" alt")[0].slice(0, -1);
-            const base64image = base64_encode(imagePath);
-            image = `<figure><img src="data:image/png;base64,${base64image}" alt`;
-        }
-        return image;
+    const reg = /<img[^>]+src\s*=\s*['"]([^'"]+)['"][^>]*>/g;
+    let image = null;
+    let images = [];
+    // Get all images
+    while (image = reg.exec(html)) {
+        const source = image[1]; // Get image source
+        images.push({
+            source: image[1],
+            base64: source.match(/http/) ? source : base64_encode(source)
+        });
+    }
+    // Replace each source
+    images.forEach(image => {
+        html = html.replace(image.source, `data:image/png;base64,${image.base64}`);
     });
-    html = htmlSanitized.join();
     return html;
 }
 exports.default = convertImagePathsToBase64;
