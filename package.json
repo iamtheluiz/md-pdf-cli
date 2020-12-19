@@ -1,7 +1,11 @@
 {
   "name": "md-pdf-cli",
   "version": "0.1.0",
-  "keywords": ["pdf", "md", "convert"],
+  "keywords": [
+    "pdf",
+    "md",
+    "convert"
+  ],
   "description": "Convert MD files to PDF",
   "main": "./dist/index.js",
   "bin": {
@@ -25,7 +29,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
-    "commander": "^6.2.0",
+    "commander": "^6.2.1",
     "figlet": "^1.5.0",
     "handlebars": "^4.7.6",
     "puppeteer": "^5.5.0",
