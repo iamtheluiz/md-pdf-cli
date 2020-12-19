@@ -2,9 +2,18 @@
 
 Convert MD files to PDF
 
-<center>
+<p align="center">
   <img src="./docs/cli.png" width="auto" height="auto" />
-</center>
+</p>
+
+<p align="center">
+  <a href="https://travis-ci.org/github/iamtheluiz/md-pdf-cli">
+    <img alt="Build Status" src="https://api.travis-ci.org/iamtheluiz/md-pdf-cli.svg?branch=master" />
+  </a>
+  <img alt="Última Alteração" src="https://img.shields.io/github/last-commit/iamtheluiz/md-pdf-cli" />
+  <img alt="Tamanho do Repositório" src="https://img.shields.io/github/repo-size/iamtheluiz/md-pdf-cli" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen" />
+</p>
 
 ## ✅ Requirements
 
