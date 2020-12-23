@@ -1,3 +1,11 @@
+/**
+ * Count time
+ * @public startTime: number
+ * @public endTime: number
+ * @public elapsedTime: number
+ * @method start
+ * @method stop
+ */
 export default class Timer {
   startTime = 0;
   endTime = 0;

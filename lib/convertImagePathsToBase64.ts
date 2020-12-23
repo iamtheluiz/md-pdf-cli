@@ -11,6 +11,11 @@ interface ImageObject {
   base64: string;
 }
 
+/**
+ * Convert images paths from a HTML string to Base64
+ * @param html HTML string with local images
+ * @return HTML string with base64 images
+ */
 export default function convertImagePathsToBase64(html: string): string {
   const reg = /<img[^>]+src\s*=\s*['"]([^'"]+)['"][^>]*>/g;
   let image = null;

@@ -9,6 +9,11 @@ const md = new Remarkable('full', {
 });
 md.use(figure);
 
+/**
+ * Convert markdown string to HTML
+ * @param content Markdown string
+ * @return HTML string
+ */
 export default function convertContentToHtml(content: string): string {
   // Convert md to HTML
   let html = md.render(content.toString());

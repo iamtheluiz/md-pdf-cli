@@ -1,6 +1,11 @@
 import hb from 'handlebars';
 import puppeteer from 'puppeteer';
 
+/**
+ * Convert a HTML string page to a PDF buffer
+ * @param html HTML string page
+ * @return PDF buffer
+ */
 export default async function createPdfFromHtml(html: string): Promise<ArrayBuffer> {
   const template = hb.compile(html, { strict: true });
   const result = template({});
